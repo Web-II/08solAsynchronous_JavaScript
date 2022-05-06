@@ -37,7 +37,6 @@ class FilmBrowserComponent {
   async getFilm(id) {
     // details van één film opvragen
     try {
-      // fetch('./data/exampleResponseApi.json')
       const response = await fetch(
         `http://www.omdbapi.com/?i=${id}&plot=full&apikey=57927523`
       );
