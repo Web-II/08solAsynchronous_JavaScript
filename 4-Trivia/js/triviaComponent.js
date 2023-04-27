@@ -1,19 +1,19 @@
-import { TriviaGame } from './triviaGame.js';
+import TriviaRepository from './triviaRepository.js';
 
-class TriviaComponent {
-  #triviaGame;
+export default class TriviaComponent {
+  #triviaRepository;
 
   constructor() {
-    this.#triviaGame = new TriviaGame();
-    this.initialiseHTML();
+    this.#triviaRepository = new TriviaRepository();
+    this.#initialiseHTML();
   }
 
-  async initialiseHTML() {
-    await this.getData();
+  async #initialiseHTML() {
+    await this.#getData();
     // Volgende vraag (eerste vraag afbeelden)
-    this.showTrivia();
+    this.#showTrivia();
   }
-  async getData() {
+  async #getData() {
     try {
       // fetch('./data/exampleResponseApi.json')
       const response = await fetch('https://opentdb.com/api.php?amount=10');
@@ -21,7 +21,7 @@ class TriviaComponent {
         throw new Error(`HTTP error: ${response.status}`);
       }
       const resultJSON = await response.json();
-      this.#triviaGame.addTrivias(resultJSON.results);
+      this.#triviaRepository.addTrivias(resultJSON.results);
     } catch (error) {
       document.getElementById(
         'answer'
@@ -29,19 +29,19 @@ class TriviaComponent {
     }
   }
 
-  showTrivia() {
+  #showTrivia() {
     const triviaHTML = document.getElementById('trivia');
     triviaHTML.innerHTML = '';
 
     // de volgende vraag
-    const trivia = this.#triviaGame.trivia;
+    const trivia = this.#triviaRepository.trivia;
 
     // #question opvullen:
     // geeft het aantal reeds gestelde vragen
     // op het totaal aantal vragen weer.
     document.getElementById('question').innerText = `Question: ${
-      this.#triviaGame.numberOfAnswers + 1
-    }/${this.#triviaGame.numberOfTrivias}`;
+      this.#triviaRepository.numberOfAnswers + 1
+    }/${this.#triviaRepository.numberOfTrivias}`;
 
     // div met de vraag aanmaken en opvullen (sectie met blauwe tekst)
     triviaHTML.insertAdjacentHTML(
@@ -94,11 +94,11 @@ class TriviaComponent {
 
     // eventhandlers instellen
     document.getElementById('send').onclick = () =>
-      this.sendClickHandler(trivia);
-    document.getElementById('next').onclick = () => this.nextClickHander();
+      this.#sendClickHandler(trivia);
+    document.getElementById('next').onclick = () => this.#nextClickHander();
   }
 
-  sendClickHandler(trivia) {
+  #sendClickHandler(trivia) {
     // als er geen enkele radio button checked is moet er niets gebeuren
     if (!document.querySelector('input[name="group"]:checked')) return;
 
@@ -108,14 +108,14 @@ class TriviaComponent {
     }
 
     // controleren of het antwoord correct was
-    this.#triviaGame.checkAnswer(
+    this.#triviaRepository.checkAnswer(
       document.querySelector('input[name="group"]:checked').value
     );
 
     // aantal correcte antwoorden op het totaal aantal antwoorden
     document.getElementById('correct').innerText = `Correct answers: ${
-      this.#triviaGame.correctAnswers
-    }/${this.#triviaGame.numberOfAnswers}`;
+      this.#triviaRepository.correctAnswers
+    }/${this.#triviaRepository.numberOfAnswers}`;
 
     // tonen van het correcte antwoord
     document.getElementById(
@@ -127,17 +127,16 @@ class TriviaComponent {
     document.getElementById('next').classList.remove('hide');
 
     // als het spel beëindigd is
-    if (this.#triviaGame.checkEndGame()) {
+    if (this.#triviaRepository.checkEndGame()) {
       // next-knop uitschakelen
       document.getElementById('next').classList.add('disabled');
     }
   }
-  nextClickHander() {
+  #nextClickHander() {
     // antwoord wissen
     document.getElementById('answer').innerHTML = '';
     // volgende vraag afbeelden
-    this.showTrivia();
+    this.#showTrivia();
   }
 }
 
-window.onload = () => new TriviaComponent();

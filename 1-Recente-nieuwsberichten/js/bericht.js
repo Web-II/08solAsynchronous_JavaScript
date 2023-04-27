@@ -1,4 +1,4 @@
-export class Bericht {
+export default class Bericht {
   #publicatiedatum;
   #titel;
   #url;

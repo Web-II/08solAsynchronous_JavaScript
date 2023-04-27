@@ -1,4 +1,4 @@
-export class Film {
+export default class Film {
   #id;
   #title;
   #poster;

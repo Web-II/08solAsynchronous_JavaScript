@@ -1,24 +1,23 @@
 import { CountriesRepository } from './countriesRepository.js';
 
-class CountriesComponent {
+export default class CountriesComponent {
   #countriesRepository;
 
   constructor() {
     this.#countriesRepository = new CountriesRepository();
-    this.initialiseHTML();
+    this.#initialiseHTML();
   }
 
-  async initialiseHTML() {
+  async #initialiseHTML() {
     // opvullen van de countriesRepository
-    await this.getData();
-    console.log(this.#countriesRepository);
+    await this.#getData();
     // instellen van de event handler voor de search box
-    this.setupSearchBox();
+    this.#setupSearchBox();
     // bij het opstarten tonen we alle landen
-    this.countriesToHTML(this.#countriesRepository.countries);
+    this.#countriesToHTML(this.#countriesRepository.countries);
   }
 
-  async getData() {
+  async #getData() {
     try {
       const response = await fetch('./data/countries.json');
       if (!response.ok) {
@@ -40,13 +39,13 @@ class CountriesComponent {
     }
   }
 
-  setupSearchBox() {
+  #setupSearchBox() {
     const searchBox = document.getElementById('search');
     searchBox.addEventListener('keyup', () => {
       const filteredCountries = this.#countriesRepository.filteredCountries(
         searchBox.value
       );
-      this.countriesToHTML(filteredCountries);
+      this.#countriesToHTML(filteredCountries);
     });
     searchBox.focus();
   }
@@ -54,7 +53,7 @@ class CountriesComponent {
   // Beeld een doorgegeven countries-array af op de webpagina
   // (de countries-array kan alle countries landen bevatten
   // of de gefilterde landen)
-  countriesToHTML(countries) {
+  #countriesToHTML(countries) {
     const numberElement = document.getElementById('number');
     const tbodyElement = document.getElementById('countries');
 
@@ -73,9 +72,3 @@ class CountriesComponent {
     });
   }
 }
-
-function init() {
-  new CountriesComponent();
-}
-
-window.onload = init;

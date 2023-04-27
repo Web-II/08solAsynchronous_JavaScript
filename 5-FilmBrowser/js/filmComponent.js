@@ -1,12 +1,17 @@
-import { FilmRepository } from './filmRepository.js';
+import FilmRepository from './filmRepository.js';
 
-class FilmBrowserComponent {
+export default class FilmComponent {
   #filmRepository;
   constructor() {
     this.#filmRepository = new FilmRepository();
+    document.getElementById('searchBtn').onclick = () => {
+      this.#searchFilms(
+        document.getElementById('searchText').value
+      );
+    };
   }
 
-  async searchFilms(searchText) {
+  async #searchFilms(searchText) {
     if (searchText !== '') {
       // films opvragen
       try {
@@ -20,21 +25,21 @@ class FilmBrowserComponent {
         const resultJSON = await response.json();
         if (resultJSON.Response === 'True') {
           this.#filmRepository.addFilms(resultJSON.Search);
-          this.showFilms();
+          this.#showFilms();
         } else {
-          this.showMessage('No films found for this search!!');
+          this.#showMessage('No films found for this search!!');
         }
       } catch (rejectValue) {
-        this.showMessage(
+        this.#showMessage(
           `Something went wrong retrieving the film data: ${rejectValue}`
         );
       }
     } else {
-      this.showMessage('The search can not be empty!!');
+      this.#showMessage('The search can not be empty!!');
     }
   }
 
-  async getFilm(id) {
+  async #getFilm(id) {
     // details van één film opvragen
     try {
       const response = await fetch(
@@ -47,16 +52,16 @@ class FilmBrowserComponent {
       if (resultJSON.Response === 'True') {
         this.#filmRepository.addDetail(id, resultJSON);
         const film = this.#filmRepository.getFilmById(id);
-        this.showDetailFilm(film);
+        this.#showDetailFilm(film);
       }
     } catch (rejectValue) {
-      this.showMessage(
+      this.#showMessage(
         `Something went wrong retrieving the film detail data: ${rejectValue}`
       );
     }
   }
 
-  showFilms() {
+  #showFilms() {
     document.getElementById('films').innerHTML = '';
     this.#filmRepository.films.forEach((film) => {
       document.getElementById('films').insertAdjacentHTML(
@@ -81,12 +86,12 @@ class FilmBrowserComponent {
       `
       );
       document.getElementById(film.id).onclick = () => {
-        this.getFilm(film.id);
+        this.#getFilm(film.id);
       };
     });
   }
 
-  showDetailFilm(film) {
+  #showDetailFilm(film) {
     let details = '';
     Object.entries(film.detail).forEach(([key, value]) => {
       details += `<li><label>${key}:</label> ${value}</li>`;
@@ -115,11 +120,11 @@ class FilmBrowserComponent {
       `
     );
     document.getElementById('listFilms').onclick = () => {
-      this.showFilms();
+      this.#showFilms();
     };
   }
 
-  showMessage(message) {
+  #showMessage(message) {
     document.getElementById('films').innerHTML = '';
     document.getElementById('films').insertAdjacentHTML(
       'beforeend',
@@ -132,13 +137,3 @@ class FilmBrowserComponent {
   }
 }
 
-const init = function () {
-  const filmBrowserComponent = new FilmBrowserComponent();
-  document.getElementById('searchBtn').onclick = () => {
-    filmBrowserComponent.searchFilms(
-      document.getElementById('searchText').value
-    );
-  };
-};
-
-window.onload = init;

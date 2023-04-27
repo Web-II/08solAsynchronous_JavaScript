@@ -1,4 +1,4 @@
-export class Trivia {
+export default class Trivia {
   #category;
   #difficulty;
   #question;

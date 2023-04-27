@@ -1,6 +1,6 @@
-import { Film } from './film.js';
+import Film  from './film.js';
 
-export class FilmRepository {
+export default class FilmRepository {
   #films=[];
 
   get films() {

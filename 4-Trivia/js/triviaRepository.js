@@ -1,6 +1,6 @@
-import { Trivia } from './trivia.js';
+import Trivia from './trivia.js';
 
-export class TriviaGame {
+export default class TriviaRepository {
   #trivias = [];
   #answers = [];
 
