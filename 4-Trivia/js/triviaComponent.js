@@ -2,21 +2,22 @@ import TriviaRepository from './triviaRepository.js';
 
 export default class TriviaComponent {
   #triviaRepository;
+  #url;
 
   constructor() {
     this.#triviaRepository = new TriviaRepository();
+    this.#url = 'https://opentdb.com/api.php?amount=10'; //'./data/exampleResponseApi.json'
     this.#initialiseHTML();
   }
 
   async #initialiseHTML() {
-    await this.#getData();
+    await this.#getData(this.#url);
     // Volgende vraag (eerste vraag afbeelden)
     this.#showTrivia();
   }
-  async #getData() {
+  async #getData(url) {
     try {
-      // fetch('./data/exampleResponseApi.json')
-      const response = await fetch('https://opentdb.com/api.php?amount=10');
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }

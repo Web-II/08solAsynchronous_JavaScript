@@ -2,24 +2,26 @@ import { CountriesRepository } from './countriesRepository.js';
 
 export default class CountriesComponent {
   #countriesRepository;
+  #url;
 
   constructor() {
+    this.#url = './data/countries.json';
     this.#countriesRepository = new CountriesRepository();
     this.#initialiseHTML();
   }
 
   async #initialiseHTML() {
     // opvullen van de countriesRepository
-    await this.#getData();
+    await this.#getData(this.#url);
     // instellen van de event handler voor de search box
     this.#setupSearchBox();
     // bij het opstarten tonen we alle landen
     this.#countriesToHTML(this.#countriesRepository.countries);
   }
 
-  async #getData() {
+  async #getData(url) {
     try {
-      const response = await fetch('./data/countries.json');
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }

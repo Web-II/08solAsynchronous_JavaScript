@@ -2,23 +2,23 @@ import FilmRepository from './filmRepository.js';
 
 export default class FilmComponent {
   #filmRepository;
+  #url;
   constructor() {
     this.#filmRepository = new FilmRepository();
+    this.#url = 'http://www.omdbapi.com/'
     document.getElementById('searchBtn').onclick = () => {
       this.#searchFilms(
-        document.getElementById('searchText').value
+        this.#url,document.getElementById('searchText').value
       );
     };
   }
 
-  async #searchFilms(searchText) {
+  async #searchFilms(url,searchText) {
     if (searchText !== '') {
       // films opvragen
       try {
-        // fetch('./data/exampleResponseApi.json')
-        const response = await fetch(
-          `http://www.omdbapi.com/?s=${searchText}&apikey=57927523`
-        );
+        url = `${url}?s=${searchText}&apikey=57927523`;
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
         }
@@ -39,12 +39,11 @@ export default class FilmComponent {
     }
   }
 
-  async #getFilm(id) {
+  async #getFilm(url,id) {
     // details van één film opvragen
     try {
-      const response = await fetch(
-        `http://www.omdbapi.com/?i=${id}&plot=full&apikey=57927523`
-      );
+      url = `${url}/?i=${id}&plot=full&apikey=57927523`
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }
@@ -70,8 +69,8 @@ export default class FilmComponent {
         <div class="col s12 m6">
           <div class="card small horizontal">
             <div class="card-image">
-              <img id="${film.id}" src="${film.poster}">
-              </div>
+              <img id="${film.id}" src="${film.poster}" alt="${film.title}">
+            </div>
             <div class="card-stacked">  
               <div class="card-content">
                 <span class="card-title">${film.title}</span>             
@@ -86,7 +85,7 @@ export default class FilmComponent {
       `
       );
       document.getElementById(film.id).onclick = () => {
-        this.#getFilm(film.id);
+        this.#getFilm(this.#url,film.id);
       };
     });
   }
@@ -103,7 +102,7 @@ export default class FilmComponent {
         <div class="col s12">
           <div class="card horizontal">
             <div class="card-image">
-              <img id="listFilms" src="${film.poster}">
+              <img id="listFilms" src="${film.poster}" alt="${film.title}">
             </div>
             <div class="card-stacked">  
               <div class="card-content">
