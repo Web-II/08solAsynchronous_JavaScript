@@ -1,4 +1,4 @@
-export class Country {
+export default class Country {
   #countryName;
   #capital;
   #region;

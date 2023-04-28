@@ -1,6 +1,6 @@
-import { Country } from './country.js';
+import  Country  from './country.js';
 
-export class CountriesRepository {
+export default class CountriesRepository {
   #countries = [];
 
   get countries() {

@@ -1,10 +1,13 @@
 import Bericht from './bericht.js';
 
 export default class Berichten {
-  #url =
-    'https://data.stad.gent/api/records/1.0/search/?dataset=recente-nieuwsberichten-van-stadgent&q=&rows=5';
+  #url;
   constructor() {
-    fetch(this.#url)
+    this.#url = 'https://data.stad.gent/api/records/1.0/search/?dataset=recente-nieuwsberichten-van-stadgent&q=&rows=5';
+    this.#getData(this.#url);
+  }
+  #getData(url){
+    fetch(url)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);

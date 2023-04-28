@@ -1,4 +1,4 @@
-import { CountriesRepository } from './countriesRepository.js';
+import  CountriesRepository  from './countriesRepository.js';
 
 export default class CountriesComponent {
   #countriesRepository;
