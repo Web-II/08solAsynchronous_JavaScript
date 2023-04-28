@@ -11,13 +11,13 @@ export default class TriviaComponent {
   }
 
   async #initialiseHTML() {
-    await this.#getData(this.#url);
+    await this.#getData();
     // Volgende vraag (eerste vraag afbeelden)
     this.#showTrivia();
   }
-  async #getData(url) {
+  async #getData() {
     try {
-      const response = await fetch(url);
+      const response = await fetch(this.#url);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }

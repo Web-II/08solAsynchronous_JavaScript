@@ -12,16 +12,16 @@ export default class CountriesComponent {
 
   async #initialiseHTML() {
     // opvullen van de countriesRepository
-    await this.#getData(this.#url);
+    await this.#getData();
     // instellen van de event handler voor de search box
     this.#setupSearchBox();
     // bij het opstarten tonen we alle landen
     this.#countriesToHTML(this.#countriesRepository.countries);
   }
 
-  async #getData(url) {
+  async #getData() {
     try {
-      const response = await fetch(url);
+      const response = await fetch(this.#url);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
       }

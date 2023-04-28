@@ -8,16 +8,16 @@ export default class FilmComponent {
     this.#url = 'http://www.omdbapi.com/'
     document.getElementById('searchBtn').onclick = () => {
       this.#searchFilms(
-        this.#url,document.getElementById('searchText').value
+        document.getElementById('searchText').value
       );
     };
   }
 
-  async #searchFilms(url,searchText) {
+  async #searchFilms(searchText) {
     if (searchText !== '') {
       // films opvragen
       try {
-        url = `${url}?s=${searchText}&apikey=57927523`;
+        const url = `${this.#url}?s=${searchText}&apikey=57927523`;
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
@@ -39,10 +39,10 @@ export default class FilmComponent {
     }
   }
 
-  async #getFilm(url,id) {
+  async #getFilm(id) {
     // details van één film opvragen
     try {
-      url = `${url}/?i=${id}&plot=full&apikey=57927523`
+      const url = `${this.#url}/?i=${id}&plot=full&apikey=57927523`
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`);
@@ -85,7 +85,7 @@ export default class FilmComponent {
       `
       );
       document.getElementById(film.id).onclick = () => {
-        this.#getFilm(this.#url,film.id);
+        this.#getFilm(film.id);
       };
     });
   }

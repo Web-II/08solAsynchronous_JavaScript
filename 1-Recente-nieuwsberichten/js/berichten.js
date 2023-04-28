@@ -4,10 +4,10 @@ export default class Berichten {
   #url;
   constructor() {
     this.#url = 'https://data.stad.gent/api/records/1.0/search/?dataset=recente-nieuwsberichten-van-stadgent&q=&rows=5';
-    this.#getData(this.#url);
+    this.#getData();
   }
-  #getData(url){
-    fetch(url)
+  #getData(){
+    fetch(this.#url)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
