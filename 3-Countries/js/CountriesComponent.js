@@ -5,7 +5,7 @@ export default class CountriesComponent {
   #url;
 
   constructor() {
-    this.#url = './data/countries.json';
+    this.#url = 'https://restcountries.com/v2/all';//'./data/countries.json';
     this.#countriesRepository = new CountriesRepository();
     this.#initialiseHTML();
   }

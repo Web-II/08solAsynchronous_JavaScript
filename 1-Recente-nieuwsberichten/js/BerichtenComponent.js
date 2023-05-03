@@ -30,12 +30,9 @@ export default class BerichtenComponent {
       .catch((error) => alert(error));
   }
   #berichtenToHTML(berichten) {
-    const divNieuwsberichten = document.getElementById('nieuwsberichten');
-    for (const bericht of berichten) {
-      divNieuwsberichten.insertAdjacentHTML(
-        'beforeend',
-        bericht.toHTMLString()
-      );
-    }
+    berichten.forEach((bericht) => {
+      document.getElementById('nieuwsberichten').insertAdjacentHTML(
+        'beforeend',bericht.toHTMLString());
+    });
   }
 }
