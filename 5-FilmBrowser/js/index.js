@@ -1,3 +1,5 @@
-import FilmComponent from './filmComponent.js'
+import FilmComponent from './FilmComponent.js';
 
-window.onload = ()=>{new FilmComponent()};
+window.onload = () => {
+  new FilmComponent();
+};

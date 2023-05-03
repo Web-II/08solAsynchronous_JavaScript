@@ -1,3 +1,5 @@
-import Berichten from './berichten.js';
+import BerichtenComponent from './BerichtenComponent.js';
 
-window.onload = () => { new Berichten(); }
+window.onload = () => {
+  new BerichtenComponent();
+};

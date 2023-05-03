@@ -1,3 +1,5 @@
-import CountriesComponent from './countriesComponent.js'
+import CountriesComponent from './CountriesComponent.js';
 
-window.onload = ()=>{new CountriesComponent()}
+window.onload = () => {
+  new CountriesComponent();
+};

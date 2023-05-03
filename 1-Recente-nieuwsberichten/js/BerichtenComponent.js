@@ -1,12 +1,13 @@
-import Bericht from './bericht.js';
+import Bericht from './Bericht.js';
 
-export default class Berichten {
+export default class BerichtenComponent {
   #url;
   constructor() {
-    this.#url = 'https://data.stad.gent/api/records/1.0/search/?dataset=recente-nieuwsberichten-van-stadgent&q=&rows=5';
+    this.#url =
+      'https://data.stad.gent/api/records/1.0/search/?dataset=recente-nieuwsberichten-van-stadgent&q=&rows=5';
     this.#getData();
   }
-  #getData(){
+  #getData() {
     fetch(this.#url)
       .then((response) => {
         if (!response.ok) {
@@ -31,7 +32,10 @@ export default class Berichten {
   #berichtenToHTML(berichten) {
     const divNieuwsberichten = document.getElementById('nieuwsberichten');
     for (const bericht of berichten) {
-      divNieuwsberichten.insertAdjacentHTML('beforeend', bericht.toHTMLString());
+      divNieuwsberichten.insertAdjacentHTML(
+        'beforeend',
+        bericht.toHTMLString()
+      );
     }
   }
 }
