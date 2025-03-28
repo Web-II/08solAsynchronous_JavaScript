@@ -1,5 +1,5 @@
-import FilmComponent from './FilmComponent.js';
+import FilmBrowserComponent from './FilmBrowserComponent.js';
 
 window.onload = () => {
-  new FilmComponent();
+  new FilmBrowserComponent();
 };

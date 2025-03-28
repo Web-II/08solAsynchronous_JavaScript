@@ -1,6 +1,6 @@
 import FilmRepository from './FilmRepository.js';
 
-export default class FilmComponent {
+export default class FilmBrowserComponent {
   #filmRepository;
   #url;
   constructor() {
