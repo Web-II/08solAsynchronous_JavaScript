@@ -5,7 +5,7 @@ export default class BerichtenComponent {
   #url;
   constructor() {
     this.#url =
-      'https://data.stad.gent/api/explore/v2.1/catalog/datasets/recente-nieuwsberichten-van-stadgent/records?limit=5';
+      'https://data.stad.gent/api/explore/v2.1/catalog/datasets/recente-nieuwsberichten-van-stadgent/records?limit=5'; //of './js/data/example.json';
     this.#berichtRepository = new BerichtenRepository();
     this.#getData();
   }
