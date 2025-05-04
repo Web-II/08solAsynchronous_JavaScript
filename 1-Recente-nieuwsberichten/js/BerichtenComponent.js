@@ -5,7 +5,7 @@ export default class BerichtenComponent {
   #url;
   constructor() {
     this.#url =
-      'https://data.stad.gent/api/records/1.0/search/?dataset=recente-nieuwsberichten-van-stadgent&q=&rows=5';
+      'https://data.stad.gent/api/explore/v2.1/catalog/datasets/recente-nieuwsberichten-van-stadgent/records?limit=5';
     this.#berichtRepository = new BerichtenRepository();
     this.#getData();
   }
@@ -19,13 +19,12 @@ export default class BerichtenComponent {
       })
       .then((jsonResponse) => {
         // De array jsonResponse.records, omzetten naar een array van Bericht-objecten.
-        const berichten = jsonResponse.records.map(
-          (record) =>
-           this.#berichtRepository.addBericht(
-              record.fields.publicatiedatum,
-              record.fields.titel,
-              record.fields.nieuwsbericht
-            )
+        const berichten = jsonResponse.results.map((record) =>
+          this.#berichtRepository.addBericht(
+            record.publicatiedatum,
+            record.titel,
+            record.nieuwsbericht
+          )
         );
         this.#berichtenToHTML(this.#berichtRepository.berichten);
       })
