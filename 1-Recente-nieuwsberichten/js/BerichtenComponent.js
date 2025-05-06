@@ -18,8 +18,8 @@ export default class BerichtenComponent {
         return response.json();
       })
       .then((jsonResponse) => {
-        // De array jsonResponse.records, omzetten naar een array van Bericht-objecten.
-        const berichten = jsonResponse.results.map((record) =>
+        // Data uit de array jsonResponse.results gebruiken om de repository op te vullen.
+        jsonResponse.results.forEach((record) =>
           this.#berichtRepository.addBericht(
             record.publicatiedatum,
             record.titel,
